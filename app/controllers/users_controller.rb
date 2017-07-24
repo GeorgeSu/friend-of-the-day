@@ -43,9 +43,6 @@ class UsersController < ApplicationController
   end
 
   private
-  def check_is_user
-      
-  end
   
   def set_user
     @user = User.find_by_id session[:user_id]

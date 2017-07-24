@@ -3,19 +3,25 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
-  before_filter :authenticate, :check_existence
- 
-  private
-
-  def authenticate
-    # Skipped authentication so we can test our code; Uncomment when deploying
-    redirect_to login_path, :notice => "Please log in" if session[:user_id].nil?
+  protected 
+  def authenticate_user
+    if session[:user_id]
+    # set current user object to @current_user object variable
+      @current_user = User.find session[:user_id] 
+      return true	
+    else
+      redirect_to(:controller => 'sessions', :action => 'login')
+      return false
+    end
   end
   
-  def check_existence
-    id = session[:user_id]
-    is_admin = session[:is_admin]
-    redirect_to logout_path if !!(id) and ((!(is_admin) and User.find_by_id(id).nil?) or (is_admin and Admin.find_by_id(id).nil?))
+  def save_login_state
+    if session[:user_id]
+      redirect_to(:controller => 'sessions', :action => 'home')
+      return false
+    else
+      return true
+    end
   end
   
 end

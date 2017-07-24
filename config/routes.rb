@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
   
-  resources :users
-  get '/login', to: 'users#login', as: "user_login"
+  resources :sessions
+  get '/login', to: 'sessions#login', as: "sessions_login"
+  get '/', to: 'sessions#home', as: "home"
+  get '/profile', to: 'sessions#profile', as: "sessions_profile"
+  get '/setting', to: 'sessions#setting', as: "sessions_setting"
+  get '/logout', to: 'sessions#logout', as: "sessions_logout"
+  post '/login_attempt', to: 'sessions#login_attempt', as: "sessions_login_attempt"
   
-  root 'session#new'
+  resources :users
+  
+  root 'sessions#home'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,15 +1,23 @@
-<body>
-  <title>Sign Up</title>
-    <div class="container">
-        <h1>Create Account</h1>
-        <%= form_for @user, url: {action: "create"}, class: "form-horizontal" do |f| %>
-            <fieldset>
-                <%= render 'shared/basic_info', {:f => f, :user => @user} %>
-                <div class="actions form-group">
-                    <a href="/" class="btn btn-default">Cancel</a>
-                    <%= f.submit "Sign Up", class: "btn btn-primary" %>
-                </div>
-            </fieldset>
-        <% end %>
-    </div>
-</body>
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, class: "alert" %>
+<% end %>
+
+<% @page_title = "UserAuth | Signup" %>
+<div class="Sign_Up_Form">
+  <h1>Create Account</h1>
+  <%= form_for(:user, :url => {:controller => 'users', :action => 'create'}) do |f| %>
+    <p> Username:</br> <%= f.text_field :username%> </p>
+    <p> Email:</br> <%= f.text_field :email%> </p>
+    <p> Password:</br> <%= f.password_field :password%></p>
+    <p> Password Confirmation:</br> <%= f.password_field :password_confirmation%> </p>
+    <%= f.submit :Signup %>
+  <% end %>
+  
+  <% if @user.errors.any? %>
+    <ul class="Signup_Errors">
+    <% for message_error in @user.errors.full_messages %>
+      <li>* <%= message_error %></li>
+    <% end %>
+    </ul>
+  <% end %>
+</div>

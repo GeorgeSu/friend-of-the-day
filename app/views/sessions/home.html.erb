@@ -1,11 +1,15 @@
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, class: "alert" %>
+<% end %>
+
 <html>
 <body>
-  <title>Login</title>
+  <title>Home</title>
     <div class="container">
         <div class = "text-center">
             <h1>Friend of the Day App</h1>
             <br>
-            <%= link_to "Log In", user_login_path, {id: "log_in", class: "btn btn-default"}  %>
+            <%= link_to "Log In", sessions_login_path  %>
             <br>
             <br>
             <%= link_to "Sign Up", new_user_path, {method: :get, class: "btn btn-default"} %>
